@@ -68,11 +68,11 @@ function makeRequest(url, data = {}, method = "GET", auth_token = '') {
   console.log('checking response...');
   if (!resp) {
     alert('Something went wrong! Please login again!');
-    logout();
+    logout('makeRequest');
   }
   if (resp && resp['code'] === 401) {
     alert('Unauthorized access to the resource!');
-    logout();
+    logout('makeRequest');
   }
   return resp;
 }
