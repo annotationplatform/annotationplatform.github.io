@@ -1,5 +1,5 @@
 var url = 'http://127.0.0.1:5000/';
-var directoryName = '/';
+var directoryName = 'https://annotationplatform.github.io/';
 
 function checkLogin() {
   // // console.log('checkLogin called');
@@ -18,9 +18,9 @@ function checkLogin() {
   } else {
     if (user != null && currUrl.indexOf('index.html') !== -1) {
       if (role === 'admin') {
-        window.location.href = 'admin/admin_home.html';
+        window.location.href = directoryName+'admin/admin_home.html';
       } else {
-        window.location.href = 'home.html';
+        window.location.href = directoryName+'home.html';
       }
     } else {
       var name = localStorage.getItem('name');
