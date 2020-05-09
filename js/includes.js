@@ -1152,7 +1152,7 @@ function loadSidebarAdmin(elemId, active = null) {
       'list': [
         {
           'name': 'Dashboard',
-          'url': directoryName + '/frontend/admin/admin_home.html',
+          'url': directoryName + 'admin/admin_home.html',
           'icon': '<i class="fas fa-fw fa-tachometer-alt"></i>',
           'active': true
         }
@@ -1163,19 +1163,19 @@ function loadSidebarAdmin(elemId, active = null) {
       'list': [
         {
           'name': 'Annotated tweets',
-          'url': directoryName + '/frontend/admin/admin_annotated_tweets_graphical.html',
+          'url': directoryName + 'admin/admin_annotated_tweets_graphical.html',
           'icon': '<i class="fas fa-tasks"></i>',
           'active': false
         },
         {
           'name': 'Reported tweets',
-          'url': directoryName + '/frontend/admin/admin_reported_tweets.html',
+          'url': directoryName + 'admin/admin_reported_tweets.html',
           'icon': '<i class="far fa-flag"></i>',
           'active': false
         },
         {
           'name': 'Statistics',
-          'url': directoryName + '/frontend/admin/admin_statistics.html',
+          'url': directoryName + 'admin/admin_statistics.html',
           'icon': '<i class="fas fa-chart-bar"></i>',
           'active': false
         }
@@ -1187,7 +1187,7 @@ function loadSidebarAdmin(elemId, active = null) {
       'list': [
         {
           'name': 'Users and tweets',
-          'url': directoryName + '/frontend/admin/admin_manage.html',
+          'url': directoryName + 'admin/admin_manage.html',
           'icon': '<i class="fas fa-user-cog"></i>',
           'active': false
         }
@@ -1266,7 +1266,7 @@ function loadSidebarUser(elemId, active = null) {
       'list': [
         {
           'name': 'Dashboard',
-          'url': directoryName + '/frontend/home.html',
+          'url': directoryName + 'home.html',
           'icon': '<i class="fas fa-fw fa-tachometer-alt"></i>',
           'active': true
         }
@@ -1277,13 +1277,13 @@ function loadSidebarUser(elemId, active = null) {
       'list': [
         {
           'name': 'Annotated tweets',
-          'url': directoryName + '/frontend/annotated_tweets.html',
+          'url': directoryName + 'annotated_tweets.html',
           'icon': '<i class="fas fa-tasks"></i>',
           'active': false
         },
         {
           'name': 'Reported tweets',
-          'url': directoryName + '/frontend/reported_tweets.html',
+          'url': directoryName + 'reported_tweets.html',
           'icon': '<i class="far fa-flag"></i>',
           'active': false
         }
@@ -1391,7 +1391,7 @@ function loadLogoutModal(elemId) {
       <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
       <div class="modal-footer">
         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-        <a class="btn btn-primary" href="${directoryName}/frontend/index.html" onclick="logout()">Logout</a>
+        <a class="btn btn-primary" href="${directoryName}index.html" onclick="logout()">Logout</a>
       </div>
     </div>
   </div>`;

@@ -189,7 +189,7 @@ function fetchAnnotationOverview() {
               </div>
               <div class="card-footer small text-light">
                 <h6>
-                  <a href="${directoryName}/frontend/admin/admin_annotated_tweets_table.html?username=${user}">
+                  <a href="${directoryName}admin/admin_annotated_tweets_table.html?username=${user}">
                     Click Here
                   </a>
                   for detailed view of <b>${user}'s</b> annotation.
@@ -330,7 +330,7 @@ function fetchAnnotationOverview() {
               </div>
               <div class="card-footer small text-light">
                 <h6>
-                  <a href="${directoryName}/frontend/admin/admin_annotated_tweets_table.html?username=${user}">
+                  <a href="${directoryName}admin/admin_annotated_tweets_table.html?username=${user}">
                     Click Here
                   </a>
                   for detailed view of <b>${user}'s</b> annotation.
