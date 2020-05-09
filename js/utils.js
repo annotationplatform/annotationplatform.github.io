@@ -65,6 +65,14 @@ function makeRequest(url, data = {}, method = "GET", auth_token = '') {
       alert('request failed');
     }
   }).responseJSON;
+  if (!resp){
+    alert('Something went wrong! Please login again!');
+    logout();
+  }
+  if (resp && resp['code']===401){
+    alert('Unauthorized access to the resource!');
+    logout();
+  }
   return resp;
 }
 
