@@ -1,5 +1,5 @@
 var url = 'http://127.0.0.1:5000/';
-var directoryName = '/annotation-platform';
+var directoryName = '/';
 
 function checkLogin() {
   // // console.log('checkLogin called');
