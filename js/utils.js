@@ -1,9 +1,9 @@
 var url = 'https://civic-bruin-276701.ue.r.appspot.com/';
 var directoryName = 'https://annotationplatform.github.io/';
 
-if (window.location.href.indexOf('localhost')===-1){
+if (window.location.href.indexOf('localhost') === -1) {
 
-}else{
+} else {
   directoryName = '/frontend/';
 }
 
@@ -25,9 +25,9 @@ function checkLogin() {
   } else {
     if (user != null && currUrl.indexOf('index.html') !== -1) {
       if (role === 'admin') {
-        window.location.href = directoryName+'admin/admin_home.html';
+        window.location.href = directoryName + 'admin/admin_home.html';
       } else {
-        window.location.href = directoryName+'home.html';
+        window.location.href = directoryName + 'home.html';
       }
     } else {
       var name = localStorage.getItem('name');
@@ -66,11 +66,11 @@ function makeRequest(url, data = {}, method = "GET", auth_token = '') {
     }
   }).responseJSON;
   console.log('checking response...');
-  if (!resp){
+  if (!resp) {
     alert('Something went wrong! Please login again!');
     logout();
   }
-  if (resp && resp['code']===401){
+  if (resp && resp['code'] === 401) {
     alert('Unauthorized access to the resource!');
     logout();
   }
@@ -559,18 +559,18 @@ function fetchAnnotatedTweets(requestFrom = 'user', username = null, langId) {
   }
 }
 
-function fetchReportedTweets(langId=null) {
+function fetchReportedTweets(langId = null) {
   var auth_token = localStorage.getItem('auth_token');
   var endpoint = '/user/fetch_reported_tweets';
   var method = 'GET';
   var data = {
-    'language':langId
+    'language': langId
   }
   var resp = makeRequest(url + endpoint, data, method, auth_token);
   // console.log(resp);
   var result = resp['result'];
   var tweets = result['reported_tweets'];
-  var table = $('#reportedTweets_'+langId).DataTable({
+  var table = $('#reportedTweets_' + langId).DataTable({
     "dom": "<'row'<'col-sm-6'l><'col-sm-6'f>>" +
       "<'row'<'col-sm-4'i>>" +
       "<'row'<'col-sm-12'tr>>" +
@@ -609,14 +609,19 @@ $(document).ready(function () {
   });
 });
 
-function logout() {
+function logout(callFrom = null) {
   var auth_token = localStorage.getItem('auth_token');
   var method = 'GET';
   var data = {};
   var endpoint = 'logout';
-  var resp = makeRequest(url + endpoint, data, method, auth_token);
+  if (!callFrom) {
+    var resp = makeRequest(url + endpoint, data, method, auth_token);
+  }
   // alert(resp);
   localStorage.clear();
+  if (callFrom) {
+    window.location.href = directoryName + 'index.html';
+  }
   // console.log(resp);
 }
 
