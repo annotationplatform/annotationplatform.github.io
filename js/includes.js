@@ -1368,12 +1368,8 @@ function loadFooter(elemId) {
   var footer = `
       <div class="container my-auto">
         <div class="copyright text-center my-auto">
-          <span>Copyright &copy; HASOC 2020</span>
-        </div>
-        <br>
-        <div class="copyright text-center my-auto">
-          <span>Made by: <a href="mailto:dbp2298@gmail.com"
-                            target="_blank">Daksh Patel <small>(Dalhousie University)</small></a></span>
+          <span>Copyright &copy; <a href="mailto:dbp2298@gmail.com"
+                            target="_blank">Daksh Patel <small>(Dalhousie University)</small></a></span></span>
         </div>
       </div>`;
   $('#' + elemId).html(footer);
