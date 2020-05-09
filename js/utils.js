@@ -1,5 +1,12 @@
-var url = 'http://127.0.0.1:5000/';
+var url = 'https://civic-bruin-276701.ue.r.appspot.com/';
 var directoryName = 'https://annotationplatform.github.io/';
+
+if (window.location.href.indexOf('localhost')===-1){
+
+}else{
+  directoryName = '/frontend/';
+}
+
 
 function checkLogin() {
   // // console.log('checkLogin called');
