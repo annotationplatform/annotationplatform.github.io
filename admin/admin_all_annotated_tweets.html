@@ -172,8 +172,8 @@
     // Setup - add a text input to each footer cell
     for (var i = 0; i < languages.length; i++) {
       var langId = languages[i];
-      console.log(langId);
-      console.log(`#allAnnotatedTweets_${langId} tfoot th`);
+      // console.log(langId);
+      // console.log(`#allAnnotatedTweets_${langId} tfoot th`);
 
       $(`#allAnnotatedTweets_${langId} tfoot th`).each(function () {
         var title = $(this).text();
@@ -214,9 +214,9 @@
 <script>
   $(document).ready(function () {
     var table = $('#allAnnotatedTweets');
-    // // console.log('here');
+    // // // console.log('here');
     $('#example tbody').on('click', 'tr', function () {
-      // // console.log('herer');
+      // // // console.log('herer');
       $(this).toggleClass('selected');
     });
 

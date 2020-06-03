@@ -1159,43 +1159,50 @@ function checkAtleastOne(name, end = 'user', successMessage = 'Add Tweet') {
 async function fileUpload(langId) {
   var form = new FormData();
   var fileInput = document.getElementById("file_upload_" + langId);
-  var uploadBtn=$("#upload_"+langId);
+  var uploadBtn = $("#upload_" + langId);
   var filename = fileInput.files[0].name;
-  if (!filename.endsWith(".csv")){
+  if (!filename.endsWith(".csv")) {
     alert("invalid file type");
     return false;
   }
-  // console.log(fileInput.files.length,);
-  uploadBtn.html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Uploading file...');
-  await new Promise(r => setTimeout(r, 500));
   form.append("fileName", fileInput.files[0], filename);
-  var auth_token = localStorage.getItem('auth_token');
-  var settings = {
-    "url": "http://127.0.0.1:8080/admin/upload_more_tweets",
-    "method": "POST",
-    "timeout": 30000,
-    "headers": {
-      "Authorization": "Basic " + btoa(auth_token + ":" + 'something')
-    },
-    "processData": false,
-    "mimeType": "multipart/form-data",
-    "contentType": false,
-    "data": form,
-    "async":false
-  };
-  // console.log(filename);
+  form.append("language", langId);
+  if(confirm(`Are you sure ${filename} contains all ${langId} tweets?`)){
+    // console.log(fileInput.files.length,);
+    uploadBtn.html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Uploading file...');
+    await new Promise(r => setTimeout(r, 500));
 
-  $.ajax(settings).done(function (response) {
-    // console.log(response);
-    response=JSON.parse(response);
-    if (response['code']===200){
-      alert(response["message"]);
-      window.location.reload();
-    }else{
-      alert(response["message"]);
-    }
-  });
-  uploadBtn.html('<i class="fa fa-upload"></i>&nbsp;Upload');
+    var auth_token = localStorage.getItem('auth_token');
+    var settings = {
+      "url": "http://127.0.0.1:8080/admin/upload_more_tweets",
+      "method": "POST",
+      "timeout": 30000,
+      "headers": {
+        "Authorization": "Basic " + btoa(auth_token + ":" + 'something')
+      },
+      "processData": false,
+      "mimeType": "multipart/form-data",
+      "contentType": false,
+      "data": form,
+      "async": false
+    };
+    // console.log(filename);
+
+    $.ajax(settings).done(function (response) {
+      // console.log(response);
+      response = JSON.parse(response);
+      if (response['code'] === 200) {
+        alert(response["message"]);
+        window.location.reload();
+      } else {
+        alert(response["message"]);
+      }
+    });
+    uploadBtn.html('<i class="fa fa-upload"></i>&nbsp;Upload');
+  } else{
+    uploadBtn.html('<i class="fa fa-upload"></i>&nbsp;Upload');
+    return false;
+  }
   window.location.reload();
 
 }

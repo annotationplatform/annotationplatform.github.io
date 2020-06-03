@@ -62,8 +62,8 @@ function makeRequest(url, data = {}, method = "GET", auth_token = '') {
       alert('request failed');
     }
   }).responseJSON;
-  console.log('checking response...');
-  console.log(resp);
+  // console.log('checking response...');
+  // console.log(resp);
   if (!resp) {
     alert('Something went wrong! Please login again!');
     logout('makeRequest');
