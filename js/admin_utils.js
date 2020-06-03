@@ -361,13 +361,13 @@ function fetchAnnotationOverview() {
       var annotation_info = result['annotation_info'];
       for (var user in annotation_info) {
         var usr = annotation_info[user];
-        console.log(`${user}_task_1_${langId}`);
+        // console.log(`${user}_task_1_${langId}`);
         task_1 = Object.values(usr['task_1']);
         task_1_labels = Object.keys(usr['task_1']);
-        console.log(task_1, task_1_labels);
+        // console.log(task_1, task_1_labels);
         task_2 = Object.values(usr['task_2']);
         task_2_labels = Object.keys(usr['task_2']);
-        console.log(task_2, task_2_labels);
+        // console.log(task_2, task_2_labels);
         if (usr['active'] && usr['started_annotation']) {
           var bg_colors_task_1 = ['#e74c3c', '#00bc8c'];
           var bg_hover_colors_task_1 = ['#d62c1a', '#008966'];
@@ -795,7 +795,7 @@ function fetchTweetStatistics(langId = null) {
     'language': langId
   }
   var resp = makeRequest(url + endpoint, data, method, auth_token);
-  console.log(resp);
+  // console.log(resp);
   if (resp['code'] === 200) {
     var result = resp['result'];
     var statistics = result['statistics'];
@@ -878,7 +878,7 @@ $(document).ready(function () {
   toogleButtonAttr('addUser', false, 'success');
   table.on('select', function (e, dt, type, indexes) {
     if (type === 'row') {
-      console.log(indexes);
+      // console.log(indexes);
       username = table.rows(indexes).data()[0][0];
       $('#box_' + username).prop('checked', true);
       toogleButtonAttr('addMoreTweets', false, 'info');
@@ -910,7 +910,7 @@ $(document).ready(function () {
 
 function checkAll() {
   var status = $('#checkAll').is(':checked');
-  console.log(status);
+  // console.log(status);
   $('input:checkbox').prop('checked', status);
   var table = $('#userTable').DataTable();
   if (status) {
@@ -921,9 +921,9 @@ function checkAll() {
 }
 
 async function addTweetsUser() {
-  console.log('620 add tweets');
+  // console.log('620 add tweets');
   var numAddTweets = parseInt($('#numAddTweets').val()) || null;
-  console.log(typeof (numAddTweets));
+  // console.log(typeof (numAddTweets));
   if (numAddTweets != null) {
     var usernames = []
     var auth_token = localStorage.getItem('auth_token');
@@ -933,7 +933,7 @@ async function addTweetsUser() {
     $("input:checkbox[name=addTweets]:checked").each(function () {
       usernames.push($(this).val());
     });
-    console.log(usernames);
+    // console.log(usernames);
     for (var i = 0; i < usernames.length; i++) {
       var username = usernames[i];
       var languages = [];
@@ -950,7 +950,7 @@ async function addTweetsUser() {
           'count': numAddTweets,
           'language': language
         }
-        console.log(language);
+        // console.log(language);
         var loadingAnimation = $('#addTweetsLabelLoading_' + username + '_' + language);
         loadingAnimation.show();
         await new Promise(r => setTimeout(r, 500));
@@ -964,7 +964,7 @@ async function addTweetsUser() {
           checkLabelTick.html(labelHtml + `&nbsp; ${resp['message']}`);
           checkLabelTick.slideDown("slow");
           loadingAnimation.hide();
-          console.log(resp['message']);
+          // console.log(resp['message']);
         } else {
           checkLabel.addClass('is-invalid');
           checkLabelTick.hide();
@@ -972,18 +972,19 @@ async function addTweetsUser() {
           checkLabelCross.html(labelHtml + `&nbsp; ${resp['message']}`);
           checkLabelCross.slideDown();
           loadingAnimation.hide();
-          console.log(resp['message']);
+          // console.log(resp['message']);
         }
       }
     }
   } else {
 
   }
+  window.location.reload();
 }
 
 async function removeTweetsUser() {
   var numRemoveTweets = parseInt($('#numRemoveTweets').val()) || null;
-  console.log(typeof (numRemoveTweets));
+  // console.log(typeof (numRemoveTweets));
   if (numRemoveTweets != null) {
     var usernames = []
     var auth_token = localStorage.getItem('auth_token');
@@ -993,7 +994,7 @@ async function removeTweetsUser() {
     $("input:checkbox[name=removeTweets]:checked").each(function () {
       usernames.push($(this).val());
     });
-    console.log(usernames);
+    // console.log(usernames);
     for (var i = 0; i < usernames.length; i++) {
       var username = usernames[i];
       var languages = [];
@@ -1010,7 +1011,7 @@ async function removeTweetsUser() {
           'count': numRemoveTweets,
           'language': language
         }
-        console.log(language);
+        // console.log(language);
         var loadingAnimation = $('#removeTweetsLabelLoading_' + username + '_' + language);
         loadingAnimation.show();
         await new Promise(r => setTimeout(r, 500));
@@ -1024,7 +1025,7 @@ async function removeTweetsUser() {
           checkLabelTick.html(labelHtml + `&nbsp; ${resp['message']}`);
           checkLabelTick.slideDown();
           loadingAnimation.hide();
-          console.log(resp['message']);
+          // console.log(resp['message']);
         } else {
           checkLabel.addClass('is-invalid');
           checkLabelTick.hide();
@@ -1032,13 +1033,14 @@ async function removeTweetsUser() {
           checkLabelCross.html(labelHtml + `&nbsp; ${resp['message']}`);
           checkLabelCross.slideDown();
           loadingAnimation.hide();
-          console.log(resp['message']);
+          // console.log(resp['message']);
         }
       }
     }
   } else {
 
   }
+  window.location.reload();
 }
 
 // function checkValidity(eleId){
@@ -1127,19 +1129,18 @@ function addUserAdmin() {
     }
 
   } else {
-    console.log('invalid');
+    // console.log('invalid');
   }
-
-
+  window.location.reload();
 }
 
 function checkAtleastOne(name, end = 'user', successMessage = 'Add Tweet') {
   // var usernames=[]
-  console.log(718);
+  // console.log(718);
   var checkBoxes = $("input:checkbox[name=" + name + "]");
   var checkBoxesChecked = $("input:checkbox[name=" + name + "]:checked");
   var checked = checkBoxesChecked.length;
-  console.log(checked);
+  // console.log(checked);
   checkBoxes.each(function () {
     $(this).removeClass('is-valid');
   });
@@ -1182,10 +1183,10 @@ async function fileUpload(langId) {
     "data": form,
     "async":false
   };
-  console.log(filename);
+  // console.log(filename);
 
   $.ajax(settings).done(function (response) {
-    console.log(response);
+    // console.log(response);
     response=JSON.parse(response);
     if (response['code']===200){
       alert(response["message"]);
@@ -1195,6 +1196,7 @@ async function fileUpload(langId) {
     }
   });
   uploadBtn.html('<i class="fa fa-upload"></i>&nbsp;Upload');
+  window.location.reload();
 
 }
 

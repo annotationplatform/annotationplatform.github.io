@@ -1,21 +1,21 @@
 // var url = 'https://civic-bruin-276701.ue.r.appspot.com/';
-// var directoryName = 'https://annotationplatform.github.io/';
-var url = 'http://127.0.0.1:8080/';
-var directoryName = 'frontend/';
+// var url = 'https://civic-bruin-276701.ue.r.appspot.com/';
+var url;
+var directoryName;
 
 if (window.location.href.indexOf('localhost') === -1) {
-
+  url = 'https://civic-bruin-276701.ue.r.appspot.com/';
+  directoryName = 'https://annotationplatform.github.io/';
 } else {
+  url = 'http://127.0.0.1:8080/';
   directoryName = '/frontend/';
 }
 
 
 function checkLogin() {
-  // // console.log('checkLogin called');
   var user = localStorage.getItem('username');
   var role = localStorage.getItem('role');
   var currUrl = window.location.href;
-  // // console.log(currUrl);
   if (user === null && currUrl.indexOf('index.html') === -1) {
     // localStorage.setItem('not_logged_in','true');
     alert("User not logged in! \n Please login again");
@@ -38,11 +38,6 @@ function checkLogin() {
       $('#username').text(name);
     }
   }
-}
-
-function checkAdmin() {
-  var role = localStorage.getItem('role');
-//  make authentication based model by making request to server
 }
 
 function makeRequest(url, data = {}, method = "GET", auth_token = '') {
@@ -68,13 +63,17 @@ function makeRequest(url, data = {}, method = "GET", auth_token = '') {
     }
   }).responseJSON;
   console.log('checking response...');
-  // console.log(resp);
+  console.log(resp);
   if (!resp) {
     alert('Something went wrong! Please login again!');
     logout('makeRequest');
   }
   if (resp && resp['code'] === 401) {
     alert('Unauthorized access to the resource!');
+    logout('makeRequest');
+  }
+  if (resp && resp['code'] === 403) {
+    alert(resp['message']);
     logout('makeRequest');
   }
   return resp;
@@ -170,7 +169,7 @@ function updateProgressBar(langId = null) {
 }
 
 function makeTransition(tweet_id, langId = null) {
-  console.log('#row_' + langId + '_id_' + tweet_id);
+  // console.log('#row_' + langId + '_id_' + tweet_id);
   var row_id = $('#row_' + langId + '_id_' + tweet_id).val();
   // console.log(row_id);
   var row = $('#' + row_id);
@@ -619,6 +618,9 @@ function logout(callFrom = null) {
   var endpoint = 'logout';
   if (!callFrom) {
     var resp = makeRequest(url + endpoint, data, method, auth_token);
+    if (resp && resp['status']){
+      alert(resp['message']);
+    }
   }
   // alert(resp);
   localStorage.clear();
