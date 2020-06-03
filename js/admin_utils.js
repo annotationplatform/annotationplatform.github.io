@@ -627,18 +627,18 @@ function filterAllTweetsTable(conflict = "", langId = null) {
   table.draw();
 }
 
-function fetchReportedTweetsAdmin(langId=null) {
+function fetchReportedTweetsAdmin(langId = null) {
   var auth_token = localStorage.getItem('auth_token');
   var endpoint = '/admin/fetch_reported_tweets';
   var method = 'GET';
   var data = {
-    'language':langId
+    'language': langId
   }
   var resp = makeRequest(url + endpoint, data, method, auth_token);
   // console.log(resp);
   var result = resp['result'];
   var tweets = result['reported_tweets'];
-  var table = $('#reportedTweets_'+langId).DataTable({
+  var table = $('#reportedTweets_' + langId).DataTable({
     "dom": "<'row'<'col-sm-6'l><'col-sm-6'f>>" +
       "<'row'<'col-sm-4'i>>" +
       "<'row'<'col-sm-12'tr>>" +
@@ -655,7 +655,7 @@ function fetchReportedTweetsAdmin(langId=null) {
     var tweet = tweets[i];
     var tweet_id = tweet['tweet_id'];
     // var text = 'Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user\'s experience. For more help, checkSynchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user\'s experience. For more help, check';
-    var text=tweet['text'];
+    var text = tweet['text'];
     var report = tweet['report']
     var col3 = `<div class="table-responsive align-items-center">
           <table class="table table-bordered table-striped border-primary"
@@ -694,11 +694,11 @@ function fetchReportedTweetsAdmin(langId=null) {
   table.columns.adjust().draw();
 }
 
-function fetchStatistics(langId=null) {
+function fetchStatistics(langId = null) {
   var auth_token = localStorage.getItem('auth_token');
   var method = 'GET';
   var data = {
-    'language':langId
+    'language': langId
   };
   var endpoint = 'admin/fetch_statistics';
   var resp = makeRequest(url + endpoint, data, method, auth_token);
@@ -717,13 +717,13 @@ function fetchStatistics(langId=null) {
     var totalRemaining = totalTweets - totalAnnots;
     // console.log(totalTweets);
     // console.log('remaining', totalRemaining);
-    $('#totalAnnotation_'+langId).html(totalAnnots);
-    $('#totalSingleAnnotation_'+langId).html(singleAnnots);
-    $('#totalDoubleAnnotation_'+langId).html(doubleOrMore);
-    $('#totalRemaining_'+langId).html(totalRemaining);
+    $('#totalAnnotation_' + langId).html(totalAnnots);
+    $('#totalSingleAnnotation_' + langId).html(singleAnnots);
+    $('#totalDoubleAnnotation_' + langId).html(doubleOrMore);
+    $('#totalRemaining_' + langId).html(totalRemaining);
 
-    var aggTask1 = $('#aggTask1_'+langId)
-    var aggTask2 = $('#aggTask2_'+langId)
+    var aggTask1 = $('#aggTask1_' + langId)
+    var aggTask2 = $('#aggTask2_' + langId)
     aggTask1.html(task1Agreement + '%');
     aggTask2.html(task2Agreement + '%');
     if (task1Agreement < 70) {
@@ -787,12 +787,12 @@ function fetchUsers() {
   table.columns.adjust().draw();
 }
 
-function fetchTweetStatistics(langId=null) {
+function fetchTweetStatistics(langId = null) {
   var auth_token = localStorage.getItem('auth_token');
   var endpoint = '/admin/fetch_statistics';
   var method = 'GET';
   var data = {
-    'language':langId
+    'language': langId
   }
   var resp = makeRequest(url + endpoint, data, method, auth_token);
   console.log(resp);
@@ -806,8 +806,8 @@ function fetchTweetStatistics(langId=null) {
 
     // console.log(totalTweets);
 
-    var pbSingle = $('#progressbarSingleAnnotated_'+langId);
-    var pbSingleRemaining = $('#progressbarSingleRemaining_'+langId);
+    var pbSingle = $('#progressbarSingleAnnotated_' + langId);
+    var pbSingleRemaining = $('#progressbarSingleRemaining_' + langId);
     var percentSingle = Math.round((singleAnnots / totalTweets) * 100) || 0;
     var percentSingleRemaining = Math.round(((totalTweets - singleAnnots) / totalTweets) * 100) || 0;
     pbSingle.css({'width': `${percentSingle}%`});
@@ -818,12 +818,12 @@ function fetchTweetStatistics(langId=null) {
     pbSingleRemaining.html(`${percentSingleRemaining}%`);
     pbSingleRemaining.attr('aria-valuenow', `${percentSingleRemaining}`);
     pbSingleRemaining.attr('data-original-title', `Total remaining: ${totalTweets - singleAnnots}`);
-    $('#singlePercentage_'+langId).text(`${percentSingle}%`);
+    $('#singlePercentage_' + langId).text(`${percentSingle}%`);
 
     // console.log(singleAnnots, totalTweets - singleAnnots, totalTweets, percentSingle, percentSingleRemaining);
 
-    var pbDouble = $('#progressbarDoubleAnnotated_'+langId);
-    var pbDoubleRemaining = $('#progressbarDoubleRemaining_'+langId);
+    var pbDouble = $('#progressbarDoubleAnnotated_' + langId);
+    var pbDoubleRemaining = $('#progressbarDoubleRemaining_' + langId);
     var percentDouble = Math.round((doubleOrMore / totalTweets) * 100) || 0;
     var percentDoubleRemaining = Math.round(((totalTweets - doubleOrMore) / totalTweets) * 100) || 0;
     pbDouble.css({'width': `${percentDouble}%`});
@@ -834,10 +834,10 @@ function fetchTweetStatistics(langId=null) {
     pbDoubleRemaining.html(`${percentDoubleRemaining}%`);
     pbDoubleRemaining.attr('aria-valuenow', `${percentDoubleRemaining}`);
     pbDoubleRemaining.attr('data-original-title', `Total remaining: ${totalTweets - doubleOrMore}`);
-    $('#doublePercentage_'+langId).text(`${percentDouble}%`);
+    $('#doublePercentage_' + langId).text(`${percentDouble}%`);
 
-    var pbReported = $('#progressbarReported_'+langId);
-    var pbReportedRemaining = $('#progressbarReportedRemaining_'+langId);
+    var pbReported = $('#progressbarReported_' + langId);
+    var pbReportedRemaining = $('#progressbarReportedRemaining_' + langId);
     var percentReported = Math.round((reportedCount / totalTweets) * 100) || 0;
     var percentReportedRemaining = Math.round(((totalTweets - reportedCount) / totalTweets) * 100) || 0;
     pbReported.css({'width': `${percentReported}%`});
@@ -848,7 +848,7 @@ function fetchTweetStatistics(langId=null) {
     pbReportedRemaining.html(`${percentReportedRemaining}%`);
     pbReportedRemaining.attr('aria-valuenow', `${percentReportedRemaining}`);
     pbReportedRemaining.attr('data-original-title', `Total remaining: ${totalTweets - reportedCount}`);
-    $('#reportedPercentage_'+langId).text(`${percentReported}%`);
+    $('#reportedPercentage_' + langId).text(`${percentReported}%`);
   }
 
 }
@@ -936,27 +936,27 @@ async function addTweetsUser() {
     console.log(usernames);
     for (var i = 0; i < usernames.length; i++) {
       var username = usernames[i];
-      var languages=[];
+      var languages = [];
 
       var checkLabel = $('#addTweetsCheck_' + username);
       var labelHtml = '';
       $(`input:checkbox[name=addTweets_${username}_check_languages]:checked`).each(function () {
         languages.push($(this).val());
       });
-      for (var j=0;j<languages.length;j++){
-        var language=languages[j];
+      for (var j = 0; j < languages.length; j++) {
+        var language = languages[j];
         data = {
           'username': username,
           'count': numAddTweets,
-          'language':language
+          'language': language
         }
         console.log(language);
-        var loadingAnimation = $('#addTweetsLabelLoading_' + username+'_'+language);
+        var loadingAnimation = $('#addTweetsLabelLoading_' + username + '_' + language);
         loadingAnimation.show();
         await new Promise(r => setTimeout(r, 500));
         var resp = makeRequest(url + endpoint, data, method, auth_token);
-        var checkLabelTick = $('#addTweetsLabelTick_' + username+'_'+language);
-        var checkLabelCross = $('#addTweetsLabelCross_' + username+'_'+language);
+        var checkLabelTick = $('#addTweetsLabelTick_' + username + '_' + language);
+        var checkLabelCross = $('#addTweetsLabelCross_' + username + '_' + language);
         if (resp['status']) {
           checkLabel.addClass('is-valid');
           checkLabelCross.hide();
@@ -996,27 +996,27 @@ async function removeTweetsUser() {
     console.log(usernames);
     for (var i = 0; i < usernames.length; i++) {
       var username = usernames[i];
-      var languages=[];
+      var languages = [];
 
       var checkLabel = $('#removeTweetsCheck_' + username);
       var labelHtml = '';
       $(`input:checkbox[name=removeTweets_${username}_check_languages]:checked`).each(function () {
         languages.push($(this).val());
       });
-      for (var j=0;j<languages.length;j++){
-        var language=languages[j];
+      for (var j = 0; j < languages.length; j++) {
+        var language = languages[j];
         data = {
           'username': username,
           'count': numRemoveTweets,
-          'language':language
+          'language': language
         }
         console.log(language);
-        var loadingAnimation = $('#removeTweetsLabelLoading_' + username+'_'+language);
+        var loadingAnimation = $('#removeTweetsLabelLoading_' + username + '_' + language);
         loadingAnimation.show();
         await new Promise(r => setTimeout(r, 500));
         var resp = makeRequest(url + endpoint, data, method, auth_token);
-        var checkLabelTick = $('#removeTweetsLabelTick_' + username+'_'+language);
-        var checkLabelCross = $('#removeTweetsLabelCross_' + username+'_'+language);
+        var checkLabelTick = $('#removeTweetsLabelTick_' + username + '_' + language);
+        var checkLabelCross = $('#removeTweetsLabelCross_' + username + '_' + language);
         if (resp['status']) {
           checkLabel.addClass('is-valid');
           checkLabelCross.hide();
@@ -1154,3 +1154,55 @@ function checkAtleastOne(name, end = 'user', successMessage = 'Add Tweet') {
     buttonSpan.attr('data-original-title', successMessage);
   }
 }
+
+async function fileUpload(langId) {
+  var form = new FormData();
+  var fileInput = document.getElementById("file_upload_" + langId);
+  var uploadBtn=$("#upload_"+langId);
+  var filename = fileInput.files[0].name;
+  if (!filename.endsWith(".csv")){
+    alert("invalid file type");
+    return false;
+  }
+  // console.log(fileInput.files.length,);
+  uploadBtn.html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Uploading file...');
+  await new Promise(r => setTimeout(r, 500));
+  form.append("fileName", fileInput.files[0], filename);
+  var auth_token = localStorage.getItem('auth_token');
+  var settings = {
+    "url": "http://127.0.0.1:8080/admin/upload_more_tweets",
+    "method": "POST",
+    "timeout": 30000,
+    "headers": {
+      "Authorization": "Basic " + btoa(auth_token + ":" + 'something')
+    },
+    "processData": false,
+    "mimeType": "multipart/form-data",
+    "contentType": false,
+    "data": form,
+    "async":false
+  };
+  console.log(filename);
+
+  $.ajax(settings).done(function (response) {
+    console.log(response);
+    response=JSON.parse(response);
+    if (response['code']===200){
+      alert(response["message"]);
+      window.location.reload();
+    }else{
+      alert(response["message"]);
+    }
+  });
+  uploadBtn.html('<i class="fa fa-upload"></i>&nbsp;Upload');
+
+}
+
+// var form = new FormData();
+// var endpoint = "admin/file_upload";
+// var auth_token = localStorage.getItem('auth_token');
+// var fileInput = document.getElementById("file_upload_" + langId);
+// var filename = fileInput.files[0].name;
+// form.append("fileName", fileInput.files[0], filename);
+// var resp = makeRequest(url + endpoint, form, "POST", auth_token);
+// console.log(resp);

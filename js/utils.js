@@ -1,5 +1,7 @@
-var url = 'https://civic-bruin-276701.ue.r.appspot.com/';
-var directoryName = 'https://annotationplatform.github.io/';
+// var url = 'https://civic-bruin-276701.ue.r.appspot.com/';
+// var directoryName = 'https://annotationplatform.github.io/';
+var url = 'http://127.0.0.1:8080/';
+var directoryName = 'frontend/';
 
 if (window.location.href.indexOf('localhost') === -1) {
 
@@ -66,6 +68,7 @@ function makeRequest(url, data = {}, method = "GET", auth_token = '') {
     }
   }).responseJSON;
   console.log('checking response...');
+  // console.log(resp);
   if (!resp) {
     alert('Something went wrong! Please login again!');
     logout('makeRequest');

@@ -344,8 +344,8 @@
     $('#addTweetsSubmitSpan').tooltip();
     for (var i = 0; i < usernames.length; i++) {
       var username = usernames[i];
-      for (var j=0; j<languages.length;j++){
-        var language=languages[j];
+      for (var j = 0; j < languages.length; j++) {
+        var language = languages[j];
         $(`#addTweetsLabelLoading_${username}_${language}`).hide();
         $(`#addTweetsLabelTick_${username}_${language}`).hide();
         $(`#addTweetsLabelCross_${username}_${language}`).hide();
@@ -412,8 +412,8 @@
     $('#removeTweetsSubmitSpan').tooltip();
     for (var i = 0; i < usernames.length; i++) {
       var username = usernames[i];
-      for (var j=0; j<languages.length;j++){
-        var language=languages[j];
+      for (var j = 0; j < languages.length; j++) {
+        var language = languages[j];
         $(`#removeTweetsLabelLoading_${username}_${language}`).hide();
         $(`#removeTweetsLabelTick_${username}_${language}`).hide();
         $(`#removeTweetsLabelCross_${username}_${language}`).hide();
@@ -476,7 +476,7 @@
   $('#addUserModal').on('show.bs.modal', function (event) {
     var languages = $('#addUserLanguages');
     var content = ``;
-    var langs = ['en', 'hi']; //localStorage.getItem('languages').split(',');
+    var langs = fetchLanguages();
     for (var i = 0; i < langs.length; i++) {
       var lang = langs[i];
       content += `
@@ -497,6 +497,10 @@
     $('#addUserPasswordFeedback').hide();
   });
 
+  $(".custom-file-input").on("change", function () {
+    var fileName = $(this).val().split("\\").pop();
+    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+  });
 </script>
 
 

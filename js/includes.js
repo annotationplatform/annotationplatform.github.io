@@ -922,9 +922,19 @@ function loadLanguageNavContentAdminManage(langId = null) {
                   </div>
                 </div>
               </div>
+            </div>   
+            <div class="row mt-2">       
+            <form onsubmit="return false;">
+              <div class="custom-file">            
+              <input type="file" id="file_upload_${langId}" class="custom-file-input">
+              <label class="custom-file-label" for="file_upload">Choose a file to upload. (Only CSV allowed)</label>
+              </div>
+              <button id="upload_${langId}" onclick="fileUpload('${langId}')"><i class="fa fa-upload"></i>&nbsp;Upload</button>
+            </form>
             </div>
           </div>
-        </div>        
+        </div>    
+            
         </div>
   `;
   return content
@@ -1119,10 +1129,22 @@ function loadLanguageNavTabsAdminManage() {
                 </div>
               </div>
             </div>
+            <div class="row  mt-2">
+            <div class="col-12">
+            <form onsubmit="return false;">
+              <div class="custom-file">            
+              <input type="file" id="file_upload_${langId}" class="custom-file-input">
+              <label class="custom-file-label btn-primary" for="file_upload">Choose a file to upload. (Only CSV allowed)</label>
+              </div>
+              <button id="upload_${langId}" class="w-100 btn btn-primary mt-1" onclick="fileUpload('${langId}')"><i class="fa fa-upload"></i>&nbsp;Upload</button>
+            </form>
+            </div>
+            </div>
           </div>
         </div>
     </div>
     `;
+    // var tabContent=loadLanguageNavContentAdminManage(langId);
     var i;
     for (i = 1; i < languages.length; i++) {
       langId = languages[i];
