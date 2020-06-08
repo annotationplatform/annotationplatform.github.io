@@ -515,7 +515,7 @@ function fetchAnnotationOverview() {
 
 function fetchAllAnnotatedTweets(langId) {
   var auth_token = localStorage.getItem('auth_token');
-  var endpoint = '/admin/fetch_all_annotated_tweets';
+  var endpoint = 'admin/fetch_all_annotated_tweets';
   var method = 'GET';
   var data = {
     'language': langId
@@ -629,7 +629,7 @@ function filterAllTweetsTable(conflict = "", langId = null) {
 
 function fetchReportedTweetsAdmin(langId = null) {
   var auth_token = localStorage.getItem('auth_token');
-  var endpoint = '/admin/fetch_reported_tweets';
+  var endpoint = 'admin/fetch_reported_tweets';
   var method = 'GET';
   var data = {
     'language': langId
@@ -741,7 +741,7 @@ function fetchStatistics(langId = null) {
 
 function fetchUsers() {
   var auth_token = localStorage.getItem('auth_token');
-  var endpoint = '/admin/fetch_users';
+  var endpoint = 'admin/fetch_users';
   var method = 'GET';
   var data = {}
   var resp = makeRequest(url + endpoint, data, method, auth_token);
@@ -789,7 +789,7 @@ function fetchUsers() {
 
 function fetchTweetStatistics(langId = null) {
   var auth_token = localStorage.getItem('auth_token');
-  var endpoint = '/admin/fetch_statistics';
+  var endpoint = 'admin/fetch_statistics';
   var method = 'GET';
   var data = {
     'language': langId
@@ -1111,13 +1111,14 @@ function addUserAdmin() {
     checkBoxesChecked.each(function () {
       langs.push($(this).val());
     });
+    console.log(langs);
     var auth_token = localStorage.getItem('auth_token');
     var method = 'POST';
     var data = {
       'name': name,
       'username': username,
       'password': password,
-      'languages': langs
+      'languages': JSON.stringify(langs)
     };
     var endpoint = 'admin/add_user';
     var resp = makeRequest(url + endpoint, data, method, auth_token);
