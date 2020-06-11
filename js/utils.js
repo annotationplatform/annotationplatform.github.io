@@ -2,12 +2,15 @@
 // var url = 'https://civic-bruin-276701.ue.r.appspot.com/';
 var url;
 var directoryName;
-
+var LANGID=null;
+var TWEET_ID=null;
 if (window.location.href.indexOf('localhost') === -1) {
   url = 'https://hasoc-annotation-backend.el.r.appspot.com/';
   directoryName = 'https://annotationplatform.github.io/';
 } else {
-  url = 'http://127.0.0.1:8080/';
+  // url = 'http://127.0.0.1:8080/';
+  // url = 'https://hasoc-annotation-backend.el.r.appspot.com/';
+  url = "https://deploy-test-7733mjuw7a-de.a.run.app/";
   directoryName = '/frontend/';
 }
 
@@ -40,43 +43,70 @@ function checkLogin() {
   }
 }
 
-function makeRequest(url, data = {}, method = "GET", auth_token = '', async=false) {
-  var resp = $.ajax({
-    url: url,
-    data: data,
-    dataType: 'json',
-    type: method,
-    headers: {
-      "Authorization": "Basic " + btoa(auth_token + ":" + 'something')
-    },
-    async: async,
-    beforeSend: function (x) {
-      if (x && x.overrideMimeType) {
-        x.overrideMimeType("application/j-son;charset=UTF-8");
+function makeRequest(url, data = {}, method = "GET", auth_token = '', async=false, async_func) {
+  if (async){
+    $.ajax({
+      url: url,
+      data: data,
+      dataType: 'json',
+      type: method,
+      headers: {
+        "Authorization": "Basic " + btoa(auth_token + ":" + 'something')
+      },
+      async: async,
+      beforeSend: function (x) {
+        if (x && x.overrideMimeType) {
+          x.overrideMimeType("application/j-son;charset=UTF-8");
+        }
+      },
+      success: function (resp){
+        async_func(resp);
+      },
+      fail: function (xhr, textStatus, errorThrown) {
+        alert('request failed');
       }
-    },
-    success: function (resp) {
-      // // console.log(resp);
-    },
-    fail: function (xhr, textStatus, errorThrown) {
-      alert('request failed');
-    }
-  }).responseJSON;
+    });
+  } else{
+
+    var resp = $.ajax({
+      url: url,
+      data: data,
+      dataType: 'json',
+      type: method,
+      headers: {
+        "Authorization": "Basic " + btoa(auth_token + ":" + 'something')
+      },
+      async: async,
+      beforeSend: function (x) {
+        if (x && x.overrideMimeType) {
+          x.overrideMimeType("application/j-son;charset=UTF-8");
+        }
+      },
+      success: function (resp) {
+        // // console.log(resp);
+      },
+      fail: function (xhr, textStatus, errorThrown) {
+        alert('request failed');
+      }
+    }).responseJSON;
+    return resp;
+  }
+
   // console.log('checking response...');
   // console.log(resp);
-  if (!resp) {
-    alert('Something went wrong! Please login again!');
-    logout('makeRequest');
-  }
-  if (resp && resp['code'] === 401) {
-    alert('Unauthorized access to the resource!');
-    logout('makeRequest');
-  }
-  if (resp && resp['code'] === 403) {
-    alert(resp['message']);
-    logout('makeRequest');
-  }
-  return resp;
+  // if (!resp) {
+  //   alert('Something went wrong! Please login again!');
+  //   logout('makeRequest');
+  // }
+  // if (resp && resp['code'] === 401) {
+  //   alert('Unauthorized access to the resource!');
+  //   logout('makeRequest');
+  // }
+  // if (resp && resp['code'] === 403) {
+  //   alert(resp['message']);
+  //   logout('makeRequest');
+  // }
+
 }
 
 function login() {
@@ -118,18 +148,11 @@ function login() {
     alert(resp['message']);
   }
 }
-
-function updateProgressBar(langId = null) {
-  var auth_token = localStorage.getItem('auth_token');
-  var method = 'GET';
-  var data = {
-    'language': langId
-  };
-  var endpoint = 'user/fetch_annotation_count';
-  var resp = makeRequest(url + endpoint, data, method, auth_token);
-  // // console.log(resp);
-  // console.log(resp);
+function temp(resp){
+  var langId=LANGID;
+  console.log(resp);
   if (resp['code'] === 200) {
+    console.log("herer");
     var result = resp['result'];
     var total_annotated = result['total_annotated'];
     var total_reported = result['total_reported'];
@@ -140,6 +163,7 @@ function updateProgressBar(langId = null) {
     var pbReported = $('#progressbarReported_' + langId);
     var pbRemaining = $('#progressbarRemaining_' + langId);
     var percentageCard = $('#percentage_' + langId);
+    console.log(pbAnnotated);
 
     var percentAnnotated = Math.round((total_annotated / agg_total_assigned) * 100) || 0;
     var percentReported = Math.round((total_reported / agg_total_assigned) * 100) || 0;
@@ -153,6 +177,7 @@ function updateProgressBar(langId = null) {
     pbAnnotated.html(`${percentAnnotated}%`);
     pbAnnotated.attr('aria-valuenow', `${percentAnnotated}`);
     pbAnnotated.attr('data-original-title', `Total Annotated: ${total_annotated}`);
+    console.log(pbAnnotated);
 
     pbReported.css({'width': `${percentReported}%`});
     pbReported.html(`${percentReported}%`);
@@ -166,6 +191,56 @@ function updateProgressBar(langId = null) {
 
     percentageCard.html(`${percentageCompleted}%`);
   }
+}
+function updateProgressBar(langId = null) {
+  var auth_token = localStorage.getItem('auth_token');
+  var method = 'GET';
+  var data = {
+    'language': langId
+  };
+  LANGID=langId;
+  var endpoint = 'user/fetch_annotation_count';
+  console.log("inside update")
+  makeRequest(url + endpoint, data, method, auth_token, true, temp);
+  // // console.log(resp);
+  // console.log(resp);
+  // if (resp['code'] === 200) {
+  //   var result = resp['result'];
+  //   var total_annotated = result['total_annotated'];
+  //   var total_reported = result['total_reported'];
+  //   var total_remaining = result['total_remaining'];
+  //   var agg_total_assigned = total_annotated + total_reported + total_remaining;
+  //
+  //   var pbAnnotated = $('#progressbarAnnotated_' + langId);
+  //   var pbReported = $('#progressbarReported_' + langId);
+  //   var pbRemaining = $('#progressbarRemaining_' + langId);
+  //   var percentageCard = $('#percentage_' + langId);
+  //
+  //   var percentAnnotated = Math.round((total_annotated / agg_total_assigned) * 100) || 0;
+  //   var percentReported = Math.round((total_reported / agg_total_assigned) * 100) || 0;
+  //   var percentageCompleted = percentAnnotated + percentReported;
+  //   var percentRemaining = Math.round((total_remaining / agg_total_assigned) * 100) || 0;
+  //
+  //   // // console.log(percentAnnotated, percentReported, percentRemaining);
+  //   // // console.log(total_annotated, total_reported, total_remaining);
+  //
+  //   pbAnnotated.css({'width': `${percentAnnotated}%`});
+  //   pbAnnotated.html(`${percentAnnotated}%`);
+  //   pbAnnotated.attr('aria-valuenow', `${percentAnnotated}`);
+  //   pbAnnotated.attr('data-original-title', `Total Annotated: ${total_annotated}`);
+  //
+  //   pbReported.css({'width': `${percentReported}%`});
+  //   pbReported.html(`${percentReported}%`);
+  //   pbReported.attr('aria-valuenow', `${percentReported}`);
+  //   pbReported.attr('data-original-title', `Total Reported: ${total_reported}`);
+  //
+  //   pbRemaining.css({'width': `${percentRemaining}%`});
+  //   pbRemaining.html(`${percentRemaining}%`);
+  //   pbRemaining.attr('aria-valuenow', `${percentRemaining}`);
+  //   pbRemaining.attr('data-original-title', `Total Remaining: ${total_remaining}`);
+  //
+  //   percentageCard.html(`${percentageCompleted}%`);
+  // }
 }
 
 function makeTransition(tweet_id, langId = null) {
@@ -371,11 +446,19 @@ function fetchMoreTweets(langId = null) {
   updateProgressBar(langId);
 
 }
+// function annotate_success(resp){
+//   var langId=LANGID;
+//   if (resp['code'] === 200) {
+//     updateProgressBar(langId);
+//   }
+// }
+function nothing(){}
 
 function annotate(tweet_id, langId = null) {
   var task_1_val = $('input[name="task_1_' + tweet_id + '"]:checked').val();
   var task_2_val = $('input[name="task_2_' + tweet_id + '"]:checked').val();
   var flag = true;
+  LANGID=langId;
   if (!task_1_val) {
     alert('Task 1 annotation required for tweet id: ' + tweet_id);
     flag = false;
@@ -400,12 +483,10 @@ function annotate(tweet_id, langId = null) {
       'task_2': task_2_val,
       'tweet_id': tweet_id
     }
-    var resp = makeRequest(url + endpoint, data, method, auth_token);
+    makeRequest(url + endpoint, data, method, auth_token, true, nothing);
+    updateProgressBar(langId);
+    makeTransition(tweet_id, langId);
     // console.log(resp);
-    if (resp['code'] === 200) {
-      updateProgressBar(langId);
-      makeTransition(tweet_id, langId);
-    }
 
 
   }
@@ -419,12 +500,15 @@ function reportTweet(tweet_id, langId) {
   var method = 'POST';
   var endpoint = 'user/report';
   var auth_token = localStorage.getItem('auth_token');
-  var resp = makeRequest(url + endpoint, data, method, auth_token);
+  // var resp = makeRequest(url + endpoint, data, method, auth_token);
   // console.log(resp);
-  if (resp['code'] === 200) {
-    updateProgressBar(langId);
-    makeTransition(tweet_id, langId);
-  }
+  // if (resp['code'] === 200) {
+  //   updateProgressBar(langId);
+  //   makeTransition(tweet_id, langId);
+  // }
+  makeRequest(url + endpoint, data, method, auth_token, true, nothing);
+  updateProgressBar(langId);
+  makeTransition(tweet_id, langId);
 
 }
 
