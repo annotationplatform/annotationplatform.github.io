@@ -5,7 +5,8 @@ var directoryName;
 var LANGID=null;
 var TWEET_ID=null;
 if (window.location.href.indexOf('localhost') === -1) {
-  url = 'https://hasoc-annotation-backend.el.r.appspot.com/';
+  // url = 'https://hasoc-annotation-backend.el.r.appspot.com/';
+  url = "https://deploy-test-7733mjuw7a-de.a.run.app/";
   directoryName = 'https://annotationplatform.github.io/';
 } else {
   // url = 'http://127.0.0.1:8080/';
