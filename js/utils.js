@@ -40,7 +40,7 @@ function checkLogin() {
   }
 }
 
-function makeRequest(url, data = {}, method = "GET", auth_token = '') {
+function makeRequest(url, data = {}, method = "GET", auth_token = '', async=false) {
   var resp = $.ajax({
     url: url,
     data: data,
@@ -49,7 +49,7 @@ function makeRequest(url, data = {}, method = "GET", auth_token = '') {
     headers: {
       "Authorization": "Basic " + btoa(auth_token + ":" + 'something')
     },
-    async: false,
+    async: async,
     beforeSend: function (x) {
       if (x && x.overrideMimeType) {
         x.overrideMimeType("application/j-son;charset=UTF-8");
