@@ -393,7 +393,7 @@ function annotate(tweet_id, langId = null) {
   if (flag) {
     // console.log(task_1_val, task_2_val);
     var auth_token = localStorage.getItem('auth_token')
-    var endpoint = '/user/annotate';
+    var endpoint = 'user/annotate';
     var method = 'POST';
     var data = {
       'task_1': task_1_val,
@@ -417,7 +417,7 @@ function reportTweet(tweet_id, langId) {
     'tweet_id': tweet_id
   };
   var method = 'POST';
-  var endpoint = '/user/report';
+  var endpoint = 'user/report';
   var auth_token = localStorage.getItem('auth_token');
   var resp = makeRequest(url + endpoint, data, method, auth_token);
   // console.log(resp);
@@ -432,7 +432,7 @@ function reportTweet(tweet_id, langId) {
 
 function fetchAnnotatedTweets(requestFrom = 'user', username = null, langId) {
   var auth_token = localStorage.getItem('auth_token');
-  var endpoint = '/user/fetch_annotated_tweets';
+  var endpoint = 'user/fetch_annotated_tweets';
   var method = 'GET';
   var data = {
     'language': langId
@@ -563,7 +563,7 @@ function fetchAnnotatedTweets(requestFrom = 'user', username = null, langId) {
 
 function fetchReportedTweets(langId = null) {
   var auth_token = localStorage.getItem('auth_token');
-  var endpoint = '/user/fetch_reported_tweets';
+  var endpoint = 'user/fetch_reported_tweets';
   var method = 'GET';
   var data = {
     'language': langId
