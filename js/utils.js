@@ -4,7 +4,7 @@ var url;
 var directoryName;
 
 if (window.location.href.indexOf('localhost') === -1) {
-  url = 'https://civic-bruin-276701.ue.r.appspot.com/';
+  url = 'https://hasoc-annotation-backend.el.r.appspot.com/';
   directoryName = 'https://annotationplatform.github.io/';
 } else {
   url = 'http://127.0.0.1:8080/';
